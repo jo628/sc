@@ -1,0 +1,27 @@
+id: linkedin-usernames
+info:
+  name: Extract LinkedIn Usernames from URLs
+  author: yassin
+  severity: low
+  description: Extracts LinkedIn usernames from URLs
+  tags:
+    - linkedin
+    - usernames
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    matchers-condition: and
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - linkedin\.com/in/([a-zA-Z0-9._-]+)
+        
+    extractors:
+      - type: regex
+        part: body
+        regex:
+          - linkedin\.com/in/([a-zA-Z0-9._-]+)

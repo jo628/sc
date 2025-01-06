@@ -1,0 +1,27 @@
+id: facebook-usernames
+info:
+  name: Extract Facebook Usernames from URLs
+  author: yassin
+  severity: low
+  description: Extracts Facebook usernames from URLs
+  tags:
+    - facebook
+    - usernames
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    matchers-condition: and
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - facebook\.com/([a-zA-Z0-9._-]+)
+        
+    extractors:
+      - type: regex
+        part: body
+        regex:
+          - facebook\.com/([a-zA-Z0-9._-]+)
