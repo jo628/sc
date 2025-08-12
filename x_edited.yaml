@@ -19,12 +19,12 @@ http:
       - type: regex
         part: body
         regex:
-          - twitter\.com/([a-zA-Z0-9._-]+)
-          - (?<![a-zA-Z])x\.com/([a-zA-Z0-9._-]+)
-        
+          - "twitter\\.com/([a-zA-Z0-9._-]+)"
+          - "[^a-zA-Z]x\\.com/([a-zA-Z0-9._-]+)"
+
     extractors:
       - type: regex
         part: body
         regex:
-          - twitter\.com/([a-zA-Z0-9._-]+)
-          - (?<![a-zA-Z])x\.com/([a-zA-Z0-9._-]+)
+          - "twitter\\.com/([a-zA-Z0-9._-]+)"
+          - "[^a-zA-Z]x\\.com/([a-zA-Z0-9._-]+)"
