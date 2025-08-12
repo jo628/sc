@@ -1,0 +1,30 @@
+id: twitter-x-usernames
+info:
+  name: Extract Twitter and X Usernames from URLs
+  author: yassin
+  severity: low
+  description: Extracts Twitter and X usernames from URLs
+  tags:
+    - twitter
+    - x
+    - usernames
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    matchers-condition: and
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - twitter\.com/([a-zA-Z0-9._-]+)
+          - (?<![a-zA-Z])x\.com/([a-zA-Z0-9._-]+)
+        
+    extractors:
+      - type: regex
+        part: body
+        regex:
+          - twitter\.com/([a-zA-Z0-9._-]+)
+          - (?<![a-zA-Z])x\.com/([a-zA-Z0-9._-]+)
