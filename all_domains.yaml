@@ -1,0 +1,28 @@
+id: top20-tlds
+info:
+  name: Extract Domains with Top 20 TLDs
+  author: yassin
+  severity: low
+  description: Extracts full domains ending with the top 20 most used TLDs from URLs
+  tags:
+    - domains
+    - tld
+    - extractor
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    matchers-condition: and
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - ([a-zA-Z0-9-]+\.)+[a-zA-Z0-9-]+\.(com|org|net|de|cn|ai|info|nl|eu|br|ca|us)
+
+    extractors:
+      - type: regex
+        part: body
+        regex:
+          - ([a-zA-Z0-9-]+\.)+[a-zA-Z0-9-]+\.(com|org|net|de|cn|ai|info|nl|eu|br|ca|us)
