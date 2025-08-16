@@ -1,0 +1,40 @@
+id: linkedin-usernames
+
+info:
+  name: Extract LinkedIn Usernames from URLs
+  author: yassin
+  severity: low
+  description: Extracts LinkedIn usernames, company names, and other identifiers from LinkedIn URLs
+  tags:
+    - linkedin
+    - usernames
+    - company
+    - groups
+    - school
+    - showcase
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    matchers-condition: or
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - linkedin\.com/in/([a-zA-Z0-9._-]+)
+          - linkedin\.com/company/([a-zA-Z0-9._-]+)
+          - linkedin\.com/school/([a-zA-Z0-9._-]+)
+          - linkedin\.com/groups/([a-zA-Z0-9._-]+)
+          - linkedin\.com/showcase/([a-zA-Z0-9._-]+)
+
+    extractors:
+      - type: regex
+        part: body
+        regex:
+          - linkedin\.com/in/([a-zA-Z0-9._-]+)
+          - linkedin\.com/company/([a-zA-Z0-9._-]+)
+          - linkedin\.com/school/([a-zA-Z0-9._-]+)
+          - linkedin\.com/groups/([a-zA-Z0-9._-]+)
+          - linkedin\.com/showcase/([a-zA-Z0-9._-]+)
