@@ -1,0 +1,28 @@
+id: tiktok-usernames
+
+info:
+  name: Extract TikTok Usernames from URLs
+  author: yassin
+  severity: low
+  description: Extracts TikTok usernames from URLs
+  tags:
+    - tiktok
+    - usernames
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    matchers-condition: and
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - tiktok\.com/@([a-zA-Z0-9._-]+)
+
+    extractors:
+      - type: regex
+        part: body
+        regex:
+          - tiktok\.com/@([a-zA-Z0-9._-]+)
