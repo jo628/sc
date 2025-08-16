@@ -19,10 +19,10 @@ http:
       - type: regex
         part: body
         regex:
-          - ([a-zA-Z0-9-]+\.)+[a-zA-Z0-9-]+\.(com|org|net|de|cn|ai|info|nl|eu|br|ca|us)
+          - ([a-zA-Z0-9-]+\.)+[a-zA-Z0-9-]+\.(com|org|net|de|io|ai|info|nl|eu|br|ca|us)
 
     extractors:
       - type: regex
         part: body
         regex:
-          - ([a-zA-Z0-9-]+\.)+[a-zA-Z0-9-]+\.(com|org|net|de|cn|ai|info|nl|eu|br|ca|us)
+          - ([a-zA-Z0-9-]+\.)+[a-zA-Z0-9-]+\.(com|org|net|de|io|ai|info|nl|eu|br|ca|us)
