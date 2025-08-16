@@ -1,0 +1,86 @@
+id: socialmedia-usernames
+
+info:
+  name: Extract Social Media Usernames from URLs (multi-platform)
+  author: yassin
+  severity: low
+  description: Extracts usernames/handles from multiple social media and content platforms (excluding Facebook & Twitter/X)
+  tags:
+    - social
+    - usernames
+    - takeover
+    - github
+    - tiktok
+    - pinterest
+    - youtube
+    - reddit
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    matchers-condition: or
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - tiktok\.com/@([a-zA-Z0-9._-]+)
+          - pinterest\.com/([a-zA-Z0-9._-]+)
+          - youtube\.com/(?:c|user|@)/([a-zA-Z0-9._-]+)
+          - snapchat\.com/add/([a-zA-Z0-9._-]+)
+          - threads\.net/@([a-zA-Z0-9._-]+)
+          - github\.com/([a-zA-Z0-9._-]+)
+          - gitlab\.com/([a-zA-Z0-9._-]+)
+          - bitbucket\.org/([a-zA-Z0-9._-]+)
+          - dribbble\.com/([a-zA-Z0-9._-]+)
+          - behance\.net/([a-zA-Z0-9._-]+)
+          - deviantart\.com/([a-zA-Z0-9._-]+)
+          - flickr\.com/people/([a-zA-Z0-9._-]+)
+          - vimeo\.com/([a-zA-Z0-9._-]+)
+          - medium\.com/@([a-zA-Z0-9._-]+)
+          - ([a-zA-Z0-9._-]+)\.substack\.com
+          - ([a-zA-Z0-9._-]+)\.wordpress\.com
+          - ([a-zA-Z0-9._-]+)\.blogspot\.com
+          - ([a-zA-Z0-9._-]+)\.tumblr\.com
+          - soundcloud\.com/([a-zA-Z0-9._-]+)
+          - ([a-zA-Z0-9._-]+)\.bandcamp\.com
+          - twitch\.tv/([a-zA-Z0-9._-]+)
+          - kick\.com/([a-zA-Z0-9._-]+)
+          - reddit\.com/user/([a-zA-Z0-9._-]+)
+          - reddit\.com/r/([a-zA-Z0-9._-]+)
+          - quora\.com/profile/([a-zA-Z0-9._-]+)
+          - producthunt\.com/@([a-zA-Z0-9._-]+)
+          - goodreads\.com/([a-zA-Z0-9._-]+)
+
+    extractors:
+      - type: regex
+        part: body
+        regex:
+          - tiktok\.com/@([a-zA-Z0-9._-]+)
+          - pinterest\.com/([a-zA-Z0-9._-]+)
+          - youtube\.com/(?:c|user|@)/([a-zA-Z0-9._-]+)
+          - snapchat\.com/add/([a-zA-Z0-9._-]+)
+          - threads\.net/@([a-zA-Z0-9._-]+)
+          - github\.com/([a-zA-Z0-9._-]+)
+          - gitlab\.com/([a-zA-Z0-9._-]+)
+          - bitbucket\.org/([a-zA-Z0-9._-]+)
+          - dribbble\.com/([a-zA-Z0-9._-]+)
+          - behance\.net/([a-zA-Z0-9._-]+)
+          - deviantart\.com/([a-zA-Z0-9._-]+)
+          - flickr\.com/people/([a-zA-Z0-9._-]+)
+          - vimeo\.com/([a-zA-Z0-9._-]+)
+          - medium\.com/@([a-zA-Z0-9._-]+)
+          - ([a-zA-Z0-9._-]+)\.substack\.com
+          - ([a-zA-Z0-9._-]+)\.wordpress\.com
+          - ([a-zA-Z0-9._-]+)\.blogspot\.com
+          - ([a-zA-Z0-9._-]+)\.tumblr\.com
+          - soundcloud\.com/([a-zA-Z0-9._-]+)
+          - ([a-zA-Z0-9._-]+)\.bandcamp\.com
+          - twitch\.tv/([a-zA-Z0-9._-]+)
+          - kick\.com/([a-zA-Z0-9._-]+)
+          - reddit\.com/user/([a-zA-Z0-9._-]+)
+          - reddit\.com/r/([a-zA-Z0-9._-]+)
+          - quora\.com/profile/([a-zA-Z0-9._-]+)
+          - producthunt\.com/@([a-zA-Z0-9._-]+)
+          - goodreads\.com/([a-zA-Z0-9._-]+)
