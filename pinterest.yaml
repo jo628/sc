@@ -1,0 +1,28 @@
+id: pinterest-usernames
+
+info:
+  name: Extract Pinterest Usernames from URLs
+  author: yassin
+  severity: low
+  description: Extracts Pinterest usernames from URLs
+  tags:
+    - pinterest
+    - usernames
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    matchers-condition: and
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - pinterest\.com/([a-zA-Z0-9._-]+)
+
+    extractors:
+      - type: regex
+        part: body
+        regex:
+          - pinterest\.com/([a-zA-Z0-9._-]+)
