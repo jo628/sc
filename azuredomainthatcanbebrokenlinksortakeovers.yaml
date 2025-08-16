@@ -1,0 +1,70 @@
+id: azure-github-takeover-domains
+
+info:
+  name: Detect Possible Takeover Domains (GitHub + Azure Services)
+  author: yassin
+  severity: medium
+  description: Detects references to domains that are commonly misconfigured and vulnerable to subdomain takeover (GitHub Pages + Azure services)
+  tags:
+    - azure
+    - github
+    - takeover
+    - cloud
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    matchers-condition: or
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - github\.io
+          - azure-api\.net
+          - azure-mobile\.net
+          - azurecontainer\.io
+          - azurecr\.io
+          - azuredatalakestore\.net
+          - azureedge\.net
+          - azurefd\.net
+          - azurehdinsight\.net
+          - azurewebsites\.net
+          - azurewebsites\.windows\.net
+          - blob\.core\.windows\.net
+          - cloudapp\.azure\.com
+          - cloudapp\.net
+          - database\.windows\.net
+          - redis\.cache\.windows\.net
+          - search\.windows\.net
+          - servicebus\.windows\.net
+          - trafficmanager\.net
+          - visualstudio\.com
+          - web\.core\.windows\.net
+
+    extractors:
+      - type: regex
+        part: body
+        regex:
+          - github\.io
+          - ([a-zA-Z0-9.-]+\.azure-api\.net)
+          - ([a-zA-Z0-9.-]+\.azure-mobile\.net)
+          - ([a-zA-Z0-9.-]+\.azurecontainer\.io)
+          - ([a-zA-Z0-9.-]+\.azurecr\.io)
+          - ([a-zA-Z0-9.-]+\.azuredatalakestore\.net)
+          - ([a-zA-Z0-9.-]+\.azureedge\.net)
+          - ([a-zA-Z0-9.-]+\.azurefd\.net)
+          - ([a-zA-Z0-9.-]+\.azurehdinsight\.net)
+          - ([a-zA-Z0-9.-]+\.azurewebsites\.net)
+          - ([a-zA-Z0-9.-]+\.azurewebsites\.windows\.net)
+          - ([a-zA-Z0-9.-]+\.blob\.core\.windows\.net)
+          - ([a-zA-Z0-9.-]+\.cloudapp\.azure\.com)
+          - ([a-zA-Z0-9.-]+\.cloudapp\.net)
+          - ([a-zA-Z0-9.-]+\.database\.windows\.net)
+          - ([a-zA-Z0-9.-]+\.redis\.cache\.windows\.net)
+          - ([a-zA-Z0-9.-]+\.search\.windows\.net)
+          - ([a-zA-Z0-9.-]+\.servicebus\.windows\.net)
+          - ([a-zA-Z0-9.-]+\.trafficmanager\.net)
+          - ([a-zA-Z0-9.-]+\.visualstudio\.com)
+          - ([a-zA-Z0-9.-]+\.web\.core\.windows\.net)
