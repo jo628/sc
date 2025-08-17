@@ -27,6 +27,7 @@ http:
         regex:
           - youtube\.com/(?:c|user|@)/([a-zA-Z0-9._-]+)
           - snapchat\.com/add/([a-zA-Z0-9._-]+)
+          - threads\.com/@([a-zA-Z0-9._-]+)
           - threads\.net/@([a-zA-Z0-9._-]+)
           - github\.com/([a-zA-Z0-9._-]+)
           - gitlab\.com/([a-zA-Z0-9._-]+)
@@ -57,6 +58,7 @@ http:
         regex:
           - youtube\.com/(?:c|user|@)/([a-zA-Z0-9._-]+)
           - snapchat\.com/add/([a-zA-Z0-9._-]+)
+          - threads\.com/@([a-zA-Z0-9._-]+)
           - threads\.net/@([a-zA-Z0-9._-]+)
           - github\.com/([a-zA-Z0-9._-]+)
           - gitlab\.com/([a-zA-Z0-9._-]+)
