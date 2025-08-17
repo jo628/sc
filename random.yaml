@@ -25,8 +25,6 @@ http:
       - type: regex
         part: body
         regex:
-          - tiktok\.com/@([a-zA-Z0-9._-]+)
-          - pinterest\.com/([a-zA-Z0-9._-]+)
           - youtube\.com/(?:c|user|@)/([a-zA-Z0-9._-]+)
           - snapchat\.com/add/([a-zA-Z0-9._-]+)
           - threads\.net/@([a-zA-Z0-9._-]+)
@@ -57,8 +55,6 @@ http:
       - type: regex
         part: body
         regex:
-          - tiktok\.com/@([a-zA-Z0-9._-]+)
-          - pinterest\.com/([a-zA-Z0-9._-]+)
           - youtube\.com/(?:c|user|@)/([a-zA-Z0-9._-]+)
           - snapchat\.com/add/([a-zA-Z0-9._-]+)
           - threads\.net/@([a-zA-Z0-9._-]+)
