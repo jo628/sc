@@ -36,6 +36,7 @@ http:
           - behance\.net/([a-zA-Z0-9._-]+)
           - deviantart\.com/([a-zA-Z0-9._-]+)
           - flickr\.com/people/([a-zA-Z0-9._-]+)
+          - xing\.com/pages/([a-zA-Z0-9._-]+)
           - vimeo\.com/([a-zA-Z0-9._-]+)
           - medium\.com/@([a-zA-Z0-9._-]+)
           - ([a-zA-Z0-9._-]+)\.substack\.com
@@ -67,6 +68,7 @@ http:
           - behance\.net/([a-zA-Z0-9._-]+)
           - deviantart\.com/([a-zA-Z0-9._-]+)
           - flickr\.com/people/([a-zA-Z0-9._-]+)
+          - xing\.com/pages/([a-zA-Z0-9._-]+)
           - vimeo\.com/([a-zA-Z0-9._-]+)
           - medium\.com/@([a-zA-Z0-9._-]+)
           - ([a-zA-Z0-9._-]+)\.substack\.com
