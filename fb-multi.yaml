@@ -1,0 +1,92 @@
+id: facebook-usernames
+info:
+  name: Extract Facebook Usernames/IDs from URLs
+  author: yassin
+  severity: low
+  description: Extracts Facebook usernames and IDs from various URL formats that may be susceptible to hijacking
+  tags:
+    - facebook
+    - usernames
+    - recon
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+    matchers-condition: and
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - 'facebook\.com/(pg|page|pages|groups|group|profile\.php\?id=|people|sharer/sharer\.php\?u=)?([a-zA-Z0-9._%-]+)'
+
+    extractors:
+      - type: regex
+        name: facebook_profile
+        part: body
+        group: 1
+        regex:
+          - 'facebook\.com/([a-zA-Z0-9._-]+)(?:\?|"|'"'"'|/|$)'
+
+      - type: regex
+        name: facebook_pg
+        part: body
+        group: 1
+        regex:
+          - 'facebook\.com/pg/([a-zA-Z0-9._-]+)'
+
+      - type: regex
+        name: facebook_page
+        part: body
+        group: 1
+        regex:
+          - 'facebook\.com/page/([a-zA-Z0-9._-]+)'
+
+      - type: regex
+        name: facebook_pages
+        part: body
+        group: 1
+        regex:
+          - 'facebook\.com/pages/([a-zA-Z0-9._%-]+/[0-9]+)'
+
+      - type: regex
+        name: facebook_group_username
+        part: body
+        group: 1
+        regex:
+          - 'facebook\.com/groups/([a-zA-Z0-9._-]+)'
+
+      - type: regex
+        name: facebook_group_id
+        part: body
+        group: 1
+        regex:
+          - 'facebook\.com/groups/([0-9]{6,})'
+
+      - type: regex
+        name: facebook_profile_id
+        part: body
+        group: 1
+        regex:
+          - 'facebook\.com/profile\.php\?id=([0-9]+)'
+
+      - type: regex
+        name: facebook_people
+        part: body
+        group: 1
+        regex:
+          - 'facebook\.com/people/([a-zA-Z0-9._%-]+/[0-9]+)'
+
+      - type: regex
+        name: facebook_events
+        part: body
+        group: 1
+        regex:
+          - 'facebook\.com/events/([a-zA-Z0-9._-]+)'
+
+      - type: regex
+        name: facebook_sharer
+        part: body
+        group: 1
+        regex:
+          - 'facebook\.com/sharer/sharer\.php\?u=([^&"'"'"'\s]+)'
