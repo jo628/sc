@@ -1,0 +1,162 @@
+id: drive-exposure-detection
+
+info:
+  name: Cloud Drive Public Share Link Exposure
+  author: security-researcher
+  severity: medium
+  description: |
+    Detects publicly shared/exposed links from cloud storage services including
+    Google Drive, OneDrive, Dropbox, Box, Mega, pCloud, Yandex Disk, iCloud,
+    MediaFire, and WeTransfer embedded in HTTP responses or JavaScript files.
+    Matches links with https://, http://, // (protocol-relative), or no protocol at all.
+  tags: exposure,google-drive,onedrive,dropbox,box,mega,cloud-storage,misconfig
+  metadata:
+    max-request: 1
+
+# ─── PROTOCOL PREFIX LEGEND ────────────────────────────────────────────────────
+# Every regex uses:   (?:https?://|//)?
+# This matches:
+#   https://drive.google.com/...   → explicit HTTPS
+#   http://drive.google.com/...    → explicit HTTP
+#   //drive.google.com/...         → protocol-relative (common in HTML/JS src attrs)
+#   drive.google.com/...           → bare domain (href values, config files, etc.)
+# ───────────────────────────────────────────────────────────────────────────────
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    matchers-condition: or
+    matchers:
+
+      # ─── Google Drive ───────────────────────────────────────────────────────
+      - type: regex
+        name: google-drive
+        regex:
+          - '(?:https?://|//)?drive\.google\.com/(?:file/d|open|drive/folders|uc|folderview)[^\s"''<>]+'
+          - '(?:https?://|//)?docs\.google\.com/(?:document|spreadsheets|presentation|forms|drawings)/d/[^\s"''<>]+'
+          - '(?:https?://|//)?drive\.google\.com/drive/u/\d+/folders/[^\s"''<>]+'
+
+      # ─── OneDrive / SharePoint ──────────────────────────────────────────────
+      - type: regex
+        name: onedrive-sharepoint
+        regex:
+          - '(?:https?://|//)?1drv\.ms/[^\s"''<>]+'
+          - '(?:https?://|//)?onedrive\.live\.com/[^\s"''<>]+'
+          - '(?:https?://|//)?[a-z0-9-]+\.sharepoint\.com/[^\s"''<>]*(?:sharing|share|sharedoc)[^\s"''<>]*'
+          - '(?:https?://|//)?[a-z0-9-]+\.sharepoint\.com/:(?:w|x|p|b|u|f):/[^\s"''<>]+'
+
+      # ─── Dropbox ────────────────────────────────────────────────────────────
+      - type: regex
+        name: dropbox
+        regex:
+          - '(?:https?://|//)?(?:www\.)?dropbox\.com/(?:s|sh|scl)/[^\s"''<>]+'
+          - '(?:https?://|//)?dl\.dropboxusercontent\.com/[^\s"''<>]+'
+          - '(?:https?://|//)?(?:www\.)?dropbox\.com/home[^\s"''<>]+'
+
+      # ─── Box ────────────────────────────────────────────────────────────────
+      - type: regex
+        name: box
+        regex:
+          - '(?:https?://|//)?(?:[a-z0-9-]+\.)?box\.com/s/[^\s"''<>]+'
+          - '(?:https?://|//)?(?:[a-z0-9-]+\.)?box\.com/(?:shared|v)/[^\s"''<>]+'
+          - '(?:https?://|//)?app\.box\.com/(?:s|v|folder)/[^\s"''<>]+'
+
+      # ─── MEGA ───────────────────────────────────────────────────────────────
+      - type: regex
+        name: mega
+        regex:
+          - '(?:https?://|//)?mega\.nz/(?:file|folder|#F?!)[^\s"''<>]+'
+          - '(?:https?://|//)?mega\.co\.nz/#(?:F|!)[^\s"''<>]+'
+
+      # ─── pCloud ─────────────────────────────────────────────────────────────
+      - type: regex
+        name: pcloud
+        regex:
+          - '(?:https?://|//)?(?:u\.)?pcloud\.(?:com|link)/[^\s"''<>]+'
+
+      # ─── Yandex Disk ────────────────────────────────────────────────────────
+      - type: regex
+        name: yandex-disk
+        regex:
+          - '(?:https?://|//)?disk\.yandex\.\w+/(?:d|i|public)/[^\s"''<>]+'
+          - '(?:https?://|//)?yadi\.sk/[^\s"''<>]+'
+
+      # ─── WeTransfer ─────────────────────────────────────────────────────────
+      - type: regex
+        name: wetransfer
+        regex:
+          - '(?:https?://|//)?we\.tl/[^\s"''<>]+'
+          - '(?:https?://|//)?(?:[a-z0-9-]+\.)?wetransfer\.com/downloads/[^\s"''<>]+'
+
+      # ─── MediaFire ──────────────────────────────────────────────────────────
+      - type: regex
+        name: mediafire
+        regex:
+          - '(?:https?://|//)?(?:www\.)?mediafire\.com/(?:file|folder|view|download)/[^\s"''<>]+'
+
+      # ─── Amazon S3 / AWS (public bucket links) ──────────────────────────────
+      - type: regex
+        name: amazon-s3-public
+        regex:
+          - '(?:https?://|//)?[a-z0-9.\-]+\.s3(?:\.[a-z0-9-]+)?\.amazonaws\.com/[^\s"''<>]+'
+          - '(?:https?://|//)?s3(?:\.[a-z0-9-]+)?\.amazonaws\.com/[a-z0-9.\-]+/[^\s"''<>]+'
+
+      # ─── Azure Blob Storage ──────────────────────────────────────────────────
+      - type: regex
+        name: azure-blob
+        regex:
+          - '(?:https?://|//)?[a-z0-9]+\.blob\.core\.windows\.net/[^\s"''<>]+'
+
+      # ─── iCloud Drive ───────────────────────────────────────────────────────
+      - type: regex
+        name: icloud-drive
+        regex:
+          - '(?:https?://|//)?(?:www\.)?icloud\.com/(?:iclouddrive|photos|keynote|pages|numbers)/[^\s"''<>]+'
+
+      # ─── Google Cloud Storage (public) ──────────────────────────────────────
+      - type: regex
+        name: gcs-public
+        regex:
+          - '(?:https?://|//)?storage\.googleapis\.com/[a-z0-9.\-]+/[^\s"''<>]+'
+          - '(?:https?://|//)?[a-z0-9.\-]+\.storage\.googleapis\.com/[^\s"''<>]+'
+
+    extractors:
+      - type: regex
+        name: extracted-drive-links
+        part: body
+        group: 0
+        regex:
+          # Google Drive / Docs
+          - '(?:https?://|//)?drive\.google\.com/(?:file/d|open|drive/folders|uc|folderview)[^\s"''<>]+'
+          - '(?:https?://|//)?docs\.google\.com/(?:document|spreadsheets|presentation|forms|drawings)/d/[^\s"''<>]+'
+          # OneDrive / SharePoint
+          - '(?:https?://|//)?1drv\.ms/[^\s"''<>]+'
+          - '(?:https?://|//)?onedrive\.live\.com/[^\s"''<>]+'
+          - '(?:https?://|//)?[a-z0-9-]+\.sharepoint\.com/:[a-z]:/[^\s"''<>]+'
+          # Dropbox
+          - '(?:https?://|//)?(?:www\.)?dropbox\.com/(?:s|sh|scl)/[^\s"''<>]+'
+          - '(?:https?://|//)?dl\.dropboxusercontent\.com/[^\s"''<>]+'
+          # Box
+          - '(?:https?://|//)?(?:[a-z0-9-]+\.)?box\.com/(?:s|v|shared|folder)/[^\s"''<>]+'
+          # MEGA
+          - '(?:https?://|//)?mega\.nz/(?:file|folder|#F?!)[^\s"''<>]+'
+          # pCloud
+          - '(?:https?://|//)?(?:u\.)?pcloud\.(?:com|link)/[^\s"''<>]+'
+          # Yandex Disk
+          - '(?:https?://|//)?disk\.yandex\.\w+/(?:d|i|public)/[^\s"''<>]+'
+          - '(?:https?://|//)?yadi\.sk/[^\s"''<>]+'
+          # WeTransfer
+          - '(?:https?://|//)?we\.tl/[^\s"''<>]+'
+          - '(?:https?://|//)?wetransfer\.com/downloads/[^\s"''<>]+'
+          # MediaFire
+          - '(?:https?://|//)?(?:www\.)?mediafire\.com/(?:file|folder|view|download)/[^\s"''<>]+'
+          # AWS S3
+          - '(?:https?://|//)?[a-z0-9.\-]+\.s3(?:\.[a-z0-9-]+)?\.amazonaws\.com/[^\s"''<>]+'
+          # Azure Blob
+          - '(?:https?://|//)?[a-z0-9]+\.blob\.core\.windows\.net/[^\s"''<>]+'
+          # iCloud
+          - '(?:https?://|//)?(?:www\.)?icloud\.com/(?:iclouddrive|photos|keynote|pages|numbers)/[^\s"''<>]+'
+          # Google Cloud Storage
+          - '(?:https?://|//)?storage\.googleapis\.com/[a-z0-9.\-]+/[^\s"''<>]+'
